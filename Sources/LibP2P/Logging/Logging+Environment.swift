@@ -45,7 +45,7 @@ extension LoggingSystem {
     }
 }
 
-extension Logger.Level: LosslessStringConvertible {
+extension Logger.Level: @retroactive LosslessStringConvertible {
     public init?(_ description: String) { self.init(rawValue: description.lowercased()) }
     public var description: String { self.rawValue }
 

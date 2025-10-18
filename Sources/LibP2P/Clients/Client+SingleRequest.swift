@@ -148,7 +148,7 @@ extension Application {
                     case .ready:
                         // If the stream is ready and we have data to send... let's send it...
                         return req.eventLoop.makeSucceededFuture(
-                            RawResponse(payload: req.allocator.buffer(bytes: self.request.bytes))
+                            RawResponse(payload: req.allocator.buffer(bytes: self.request))
                         ).always { _ in
                             if style == .noResponseExpected {
                                 self.hasCompleted = true
@@ -273,7 +273,7 @@ extension Application {
                     case .ready:
                         // If the stream is ready and we have data to send... let's send it...
                         return req.eventLoop.makeSucceededFuture(
-                            RawResponse(payload: req.allocator.buffer(bytes: self.request.bytes))
+                            RawResponse(payload: req.allocator.buffer(bytes: self.request))
                         ).always { _ in
                             if style == .noResponseExpected {
                                 self.hasCompleted = true

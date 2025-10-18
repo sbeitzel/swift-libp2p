@@ -126,8 +126,8 @@ extension Identify {
             let remoteIdentify = try IdentifyMessage(contiguousBytes: payload)
             /// and that is valid
             let signedEnvelope = try SealedEnvelope(
-                marshaledEnvelope: remoteIdentify.signedPeerRecord.bytes,
-                verifiedWithPublicKey: remoteIdentify.publicKey.bytes
+                marshaledEnvelope: [UInt8](remoteIdentify.signedPeerRecord),
+                verifiedWithPublicKey: [UInt8](remoteIdentify.publicKey)
             )
             let peerRecord = try PeerRecord(
                 marshaledData: Data(signedEnvelope.rawPayload),
@@ -143,7 +143,7 @@ extension Identify {
             /// Publish the identifiedPeer event
             self.application?.events.post(
                 .identifiedPeer(
-                    IdentifiedPeer(peer: peerRecord.peerID, identity: try! remoteIdentify.serializedData().bytes)
+                    IdentifiedPeer(peer: peerRecord.peerID, identity: try! [UInt8](remoteIdentify.serializedData()))
                 )
             )
 
@@ -169,8 +169,8 @@ extension Identify {
             let remoteIdentify = try IdentifyMessage(contiguousBytes: payload)
             /// and that is valid
             let signedEnvelope = try SealedEnvelope(
-                marshaledEnvelope: remoteIdentify.signedPeerRecord.bytes,
-                verifiedWithPublicKey: remoteIdentify.publicKey.bytes
+                marshaledEnvelope: [UInt8](remoteIdentify.signedPeerRecord),
+                verifiedWithPublicKey: [UInt8](remoteIdentify.publicKey)
             )
             let peerRecord = try PeerRecord(
                 marshaledData: Data(signedEnvelope.rawPayload),
@@ -240,7 +240,7 @@ extension Identify {
         // Marshal the Identify message and prepare for sending..
         let marshalledPeerRecord = try id.serializedData()
 
-        return marshalledPeerRecord.bytes
+        return [UInt8](marshalledPeerRecord)
     }
 }
 
@@ -301,7 +301,7 @@ extension Identify {
             tasks.append(
                 application.peers.add(
                     metaKey: .AgentVersion,
-                    data: agentVersion.bytes,
+                    data: [UInt8](agentVersion),
                     toPeer: identifiedPeer,
                     on: connection.channel.eventLoop
                 )
@@ -313,7 +313,7 @@ extension Identify {
             tasks.append(
                 application.peers.add(
                     metaKey: .ProtocolVersion,
-                    data: protocolVersion.bytes,
+                    data: [UInt8](protocolVersion),
                     toPeer: identifiedPeer,
                     on: connection.channel.eventLoop
                 )
@@ -328,7 +328,7 @@ extension Identify {
             tasks.append(
                 application.peers.add(
                     metaKey: .ObservedAddress,
-                    data: ma.bytes,
+                    data: [UInt8](ma),
                     toPeer: identifiedPeer,
                     on: connection.channel.eventLoop
                 )
@@ -500,7 +500,7 @@ extension Identify {
                 /// Store it!
                 return req.application.peers.add(
                     metaKey: MetadataBook.Keys.Latency,
-                    data: newData.bytes,
+                    data: [UInt8](newData),
                     toPeer: req.remotePeer!
                 )
             }.whenComplete({ _ in

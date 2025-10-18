@@ -87,7 +87,7 @@ extension Data: ResponseEncodable {
     // See `ResponseEncodable`.
     public func encodeResponse(for request: Request) -> EventLoopFuture<RawResponse> {
         //let res = Response(payload: .init(bytes: self.bytes))
-        let res = RawResponse(payload: request.allocator.buffer(bytes: self.bytes))
+        let res = RawResponse(payload: request.allocator.buffer(bytes: self))
         return request.eventLoop.makeSucceededFuture(res)
     }
 }

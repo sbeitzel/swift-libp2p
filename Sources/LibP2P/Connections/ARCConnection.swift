@@ -554,7 +554,7 @@ public class ARCConnection: AppConnection {
                             return childChannel.eventLoop.makeSucceededVoidFuture()
                         }
                         self.logger.trace("Forwarding leftover bytes along pipeline...")
-                        childChannel.pipeline.fireChannelRead(NIOAny(proto.leftoverBytes))
+                        childChannel.pipeline.fireChannelRead(proto.leftoverBytes)
                     }
                     return childChannel.eventLoop.makeSucceededVoidFuture()
                 }

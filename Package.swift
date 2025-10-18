@@ -19,7 +19,7 @@ let package = Package(
     name: "swift-libp2p",
     platforms: [
         .macOS(.v10_15),
-        .iOS(.v13),
+        .iOS("18.0.0"), // TODO: use a constant like `.v18` when one exists -- SWB 2025-10-18
     ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
@@ -43,11 +43,11 @@ let package = Package(
         // 🚍 High-performance trie-node router.
         .package(url: "https://github.com/vapor/routing-kit.git", from: "4.0.0"),
         // LibP2P Core
-        .package(url: "https://github.com/swift-libp2p/swift-libp2p-core.git", .upToNextMinor(from: "0.3.0")),
+        .package(url: "https://github.com/sbeitzel/swift-libp2p-core.git", .branch("main")),
         // Multiaddr
-        .package(url: "https://github.com/swift-libp2p/swift-multiaddr.git", .upToNextMinor(from: "0.1.0")),
+        .package(url: "https://github.com/sbeitzel/swift-multiaddr.git", .branch("main")),
         // LibP2P Peer Identities
-        .package(url: "https://github.com/swift-libp2p/swift-peer-id.git", .upToNextMinor(from: "0.1.0")),
+        .package(url: "https://github.com/sbeitzel/swift-peer-id.git", .branch("feature/update_to_swift_6")),
         // Sugary extensions for the SwiftNIO library
         .package(url: "https://github.com/vapor/async-kit.git", .exact("1.11.1")),
         // Swift Protobuf
